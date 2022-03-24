@@ -25,7 +25,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-const FILENAME string = "README.md"
+const FILENAME string = "README.org"
 
 // newCmd represents the new command
 var newCmd = &cobra.Command{
@@ -34,7 +34,7 @@ var newCmd = &cobra.Command{
 	Long: `Creates a new note and opens it in your $EDITOR. 
 For example:
 
-<pmz new> will create a new note (README.md) in a directory with the current timestamp and opens it up in your $EDITOR.
+<pmz new> will create a new note (README.org) in a directory with the current timestamp and opens it up in your $EDITOR.
 You will see the new directory and file created in the configured ZTLDIR.
 
 If a template is specified and you use the --title flag, it will try to insert the title in that template.
@@ -64,7 +64,7 @@ If a template is specified and you use the --title flag, it will try to insert t
 	},
 }
 
-// createZettelEntry attempts to create the directory for the new note, as well as a README.md file in that same directory.
+// createZettelEntry attempts to create the directory for the new note, as well as a README.org file in that same directory.
 // Panics if it any of it fails as this is a key functionality of the command.
 // Returns file pointer. Caller should use `defer` to close this file pionter, or manually close it when not needed.
 func createZettelEntry(ztldir, dirname string) *os.File {

@@ -25,7 +25,7 @@ import (
 	"strings"
 )
 
-var SupportedExtensions = []string{".md", ".txt", ".rst"}
+var SupportedExtensions = []string{".md", ".txt", ".org"}
 
 type Result struct {
 	Path    string

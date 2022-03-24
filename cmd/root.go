@@ -29,9 +29,6 @@ var (
 	ztldir       string
 	notetemplate string
 	editor       string
-	gitrepo      string
-	gituser      string
-	repotoken    string
 	Logger       *logs.Log
 )
 
@@ -67,9 +64,6 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&ztldir, "ztldir", "", "Zettelkasten main directory loaded from config.")
 	rootCmd.PersistentFlags().StringVar(&notetemplate, "notetemplate", "", "Path to template of a new note. Ensure it contains the variables specified in the documentation.")
 	rootCmd.PersistentFlags().StringVar(&editor, "editor", "", "Editor PATH loaded from config file.")
-	rootCmd.PersistentFlags().StringVar(&gitrepo, "gitrepo", "", "Zettelkasten git repository loaded from config.")
-	rootCmd.PersistentFlags().StringVar(&gituser, "gituser", "", "Git username loaded from config.")
-	rootCmd.PersistentFlags().StringVar(&repotoken, "repotoken", "", "Zettelkasten git repository token with **read** and **write** access")
 
 	rootCmd.InitDefaultVersionFlag()
 
@@ -77,9 +71,6 @@ func init() {
 	viper.BindPFlag("ztldir", rootCmd.PersistentFlags().Lookup("ztldir"))
 	viper.BindPFlag("editor", rootCmd.PersistentFlags().Lookup("editor"))
 	viper.BindPFlag("notetemplate", rootCmd.PersistentFlags().Lookup("notetemplate"))
-	viper.BindPFlag("gitrepo", rootCmd.PersistentFlags().Lookup("gitrepo"))
-	viper.BindPFlag("gituser", rootCmd.PersistentFlags().Lookup("gituser"))
-	viper.BindPFlag("repotoken", rootCmd.PersistentFlags().Lookup("repotoken"))
 }
 
 // initConfig reads in config file and ENV variables if set.
