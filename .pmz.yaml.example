@@ -4,9 +4,3 @@ editor: ''
 ztldir: ''
 # If you have a note template you would like to use. Example: /home/<user>/zettel_tmpl.txt
 notetemplate: ''
-# Link to a remote git repository. Example: git@gitlab.com:<user>/zettel.git
-gitrepo: ''
-# Your username in that remote git repositories server. 
-gituser: ''
-# Access token you generated in that server to grant you programmatic access. Ensure it provides at least read and write access to repositories.
-repotoken: ''
