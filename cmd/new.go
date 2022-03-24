@@ -105,5 +105,5 @@ func init() {
 	rootCmd.AddCommand(newCmd)
 
 	newCmd.Flags().String("title", "Untitled", "Provide a title for the new note")
-	newCmd.Flags().Bool("open", false, "To open or not the new note with the configured $EDITOR. Default is false.")
+	newCmd.Flags().Bool("open", true, "To open or not the new note with the configured $EDITOR. Default is true.")
 }

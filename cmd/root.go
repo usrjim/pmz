@@ -41,7 +41,7 @@ It provides methods to add, search and save your changes into a git repository.
 
 Full documentation can be found in the project's README: https://github.com/gsilvapt/pmz
 `,
-	Version: "0.5",
+	Version: "0.6",
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
@@ -88,7 +88,7 @@ func initConfig() {
 		viper.SetConfigName(".pmz.yaml")
 	}
 
-	viper.AutomaticEnv() // read in environment variables that match
+	// viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err != nil {
