@@ -1,4 +1,4 @@
-module github.com/gsilvapt/pmz
+module github.com/usrjim/pmz
 
 go 1.17
 

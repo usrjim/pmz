@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/gsilvapt/pmz/cmd"
+import "github.com/usrjim/pmz/cmd"
 
 func main() {
 	cmd.Execute()

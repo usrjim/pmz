@@ -22,7 +22,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gsilvapt/pmz/internal/utils"
+	"github.com/usrjim/pmz/internal/utils"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
