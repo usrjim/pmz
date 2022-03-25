@@ -33,7 +33,7 @@ type Result struct {
 }
 
 // WalkNoteDir looks for supported files in the provided directory. Returns a list of Results if any found.
-func WalkNoteDir(searchTerm string, path string) []*Result {
+func WalkNoteDir(searchTerm string, path string, scope string) []*Result {
 	var results []*Result
 	filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -54,6 +54,16 @@ func WalkNoteDir(searchTerm string, path string) []*Result {
 		}
 		defer f.Close()
 
+		var readTarget int
+		switch scope {
+		case "title":
+			readTarget = 0
+		case "tags":
+			readTarget = 1
+		default:
+			readTarget = -1
+		}
+
 		rd := bufio.NewReader(f)
 		for i := 0; i <= 1; i++ {
 			line, err := rd.ReadString('\n')
@@ -62,6 +72,10 @@ func WalkNoteDir(searchTerm string, path string) []*Result {
 					continue
 				}
 				log.Fatalf("failed reading first line from file: %s", err)
+			}
+
+			if readTarget >= 0 && readTarget != i {
+				continue
 			}
 
 			if strings.Contains(strings.ToLower(line), strings.ToLower(searchTerm)) {

@@ -7,4 +7,4 @@ forked from https://github.com/gsilvapt/pmz
 
 # Install
 
-`go install github.com/usrjim/pmz@0.6`
+`go install github.com/usrjim/pmz@0.7`
