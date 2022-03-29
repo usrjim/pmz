@@ -18,8 +18,6 @@ package utils
 
 import (
 	"bufio"
-	"io"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -33,7 +31,7 @@ type Result struct {
 }
 
 // WalkNoteDir looks for supported files in the provided directory. Returns a list of Results if any found.
-func WalkNoteDir(searchTerm string, path string, scope string) []*Result {
+func WalkNoteDir(searchTerm string, path string, displayFilePath bool) []*Result {
 	var results []*Result
 	filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -48,38 +46,16 @@ func WalkNoteDir(searchTerm string, path string, scope string) []*Result {
 			return nil
 		}
 
-		f, err := os.OpenFile(path, os.O_RDONLY, 0600)
+		lines, err := readFirstTwoLines(path)
 		if err != nil {
 			return err
 		}
-		defer f.Close()
-
-		var readTarget int
-		switch scope {
-		case "title":
-			readTarget = 0
-		case "tags":
-			readTarget = 1
-		default:
-			readTarget = -1
-		}
-
-		rd := bufio.NewReader(f)
-		for i := 0; i <= 1; i++ {
-			line, err := rd.ReadString('\n')
-			if err != nil {
-				if err == io.EOF {
-					continue
-				}
-				log.Fatalf("failed reading first line from file: %s", err)
-			}
-
-			if readTarget >= 0 && readTarget != i {
-				continue
-			}
-
-			if strings.Contains(strings.ToLower(line), strings.ToLower(searchTerm)) {
-				results = append(results, &Result{Path: path, Context: line})
+		s := strings.Join(lines, "; ") + "\n"
+		if strings.Contains(strings.ToLower(s), strings.ToLower(searchTerm)) {
+			if displayFilePath {
+				results = append(results, &Result{Path: path, Context: s})
+			} else {
+				results = append(results, &Result{Path: "", Context: s})
 			}
 		}
 
@@ -97,4 +73,20 @@ func supportedExtension(term string) bool {
 	}
 
 	return false
+}
+
+func readFirstTwoLines(filePath string) (lines []string, err error) {
+	f, err := os.Open(filePath)
+	if err != nil {
+		return
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+	for i := 0; i <= 1; i++ {
+		scanner.Scan()
+		lines = append(lines, scanner.Text())
+	}
+	err = scanner.Err()
+	return
 }

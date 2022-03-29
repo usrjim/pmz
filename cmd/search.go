@@ -40,11 +40,11 @@ var searchCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ztldir := viper.GetString("ztldir")
 		editor := viper.GetString("editor")
-		scope, _ := cmd.Flags().GetString("scope")
+		displayFilePath, _ := cmd.Flags().GetBool("v")
 		term := args[0]
 
 		// TODO Must make use of the outcome from WalkNoteDir and thus this recursive call should do something.
-		var r []*utils.Result = utils.WalkNoteDir(term, ztldir, scope)
+		var r []*utils.Result = utils.WalkNoteDir(term, ztldir, displayFilePath)
 		if len(r) < 1 {
 			fmt.Println("No results found for query. Exiting...")
 			return
@@ -114,7 +114,7 @@ func readFile(fp string) {
 }
 
 func init() {
-	searchCmd.Flags().String("scope", "all", "Provide a scope: all / title / tags")
+	searchCmd.Flags().Bool("v", false, "Include file path in result. Default is false.")
 
 	rootCmd.AddCommand(searchCmd)
 }
