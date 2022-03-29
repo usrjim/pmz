@@ -8,4 +8,4 @@ forked from https://github.com/gsilvapt/pmz
 
 # Install
 
-`go install github.com/usrjim/pmz@0.8`
+`go install github.com/usrjim/pmz@0.9`

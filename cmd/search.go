@@ -44,20 +44,25 @@ var searchCmd = &cobra.Command{
 		term := args[0]
 
 		// TODO Must make use of the outcome from WalkNoteDir and thus this recursive call should do something.
-		var r []*utils.Result = utils.WalkNoteDir(term, ztldir, displayFilePath)
+		var r []*utils.Result = utils.WalkNoteDir(term, ztldir)
 		if len(r) < 1 {
-			fmt.Println("No results found for query. Exiting...")
+			fmt.Println("No results found for query.")
 			return
 		}
 
 		for i, f := range r {
-			fmt.Printf("%d | %s: %s", i, f.Path, f.Context)
+			if displayFilePath {
+				fmt.Printf("%d | %s: %s\n", i, f.Path, f.Context)
+			} else {
+				fmt.Printf("%d | %s\n", i, f.Context)
+			}
 		}
+		fmt.Println(strings.Repeat("-", 40))
 
 		// Proceed with next command
 	Interaction:
 		for {
-			fmt.Println("Choose the next action with the found files: `open <id>` to open with your editor, " +
+			fmt.Println("`open <id>` to open with your editor, " +
 				"`more <id>` to print the file contents, or <q> to quit.")
 
 			switch cmd, idx := nextCommand(); cmd {

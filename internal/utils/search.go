@@ -31,7 +31,7 @@ type Result struct {
 }
 
 // WalkNoteDir looks for supported files in the provided directory. Returns a list of Results if any found.
-func WalkNoteDir(searchTerm string, path string, displayFilePath bool) []*Result {
+func WalkNoteDir(searchTerm string, path string) []*Result {
 	var results []*Result
 	filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -50,13 +50,9 @@ func WalkNoteDir(searchTerm string, path string, displayFilePath bool) []*Result
 		if err != nil {
 			return err
 		}
-		s := strings.Join(lines, "; ") + "\n"
+		s := strings.Join(lines, "; ")
 		if strings.Contains(strings.ToLower(s), strings.ToLower(searchTerm)) {
-			if displayFilePath {
-				results = append(results, &Result{Path: path, Context: s})
-			} else {
-				results = append(results, &Result{Path: "", Context: s})
-			}
+			results = append(results, &Result{Path: path, Context: s})
 		}
 
 		return nil
